@@ -36,6 +36,7 @@ export async function updateSpace(id: string, data: Partial<SpaceInput>) {
   });
 }
 
+// 5. Desactivar un espacio (Admin)
 export async function deactivateSpace(id: string) {
   // Regla 13: No se puede desactivar si tiene reservas futuras confirmadas
   const now = new Date();
@@ -56,5 +57,12 @@ export async function deactivateSpace(id: string) {
   return prisma.space.update({
     where: { id },
     data: { isActive: false },
+  });
+}
+
+// 6. Obtener todos los espacios (incluyendo inactivos, solo para Admin)
+export async function getAllSpacesAdmin() {
+  return prisma.space.findMany({
+    orderBy: { createdAt: "desc" },
   });
 }
