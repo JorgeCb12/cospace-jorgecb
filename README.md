@@ -1,6 +1,6 @@
 # CoSpace
 
-> Plataforma web fullstack para la reserva de espacios de coworking por horas.
+Plataforma web fullstack para la reserva de espacios de coworking por horas.
 
 CoSpace permite a los usuarios explorar un catálogo de escritorios, salas de juntas y cabinas, crear y cancelar reservas, y gestionar su historial. Los administradores pueden crear, editar y desactivar espacios desde un panel dedicado.
 
@@ -86,6 +86,14 @@ docker build -t cospace-app .
 docker run -p 3000:3000 --env-file .env cospace-app
 ```
 
+### 3. Ejecución con Docker Compose (Alternativa)
+
+Si tienes Docker Compose instalado y el proyecto cuenta con la configuración correspondiente (`docker-compose.yml`), puedes construir la imagen y levantar los servicios con:
+
+```bash
+docker-compose up --build
+```
+
 ---
 
 ## Scripts disponibles
@@ -101,7 +109,7 @@ docker run -p 3000:3000 --env-file .env cospace-app
 
 ## Estructura del proyecto
 
-```
+```text
 cospace/
 ├── app/
 │   ├── (auth)/          # Rutas de autenticación (login, registro)
@@ -109,9 +117,17 @@ cospace/
 │   ├── (private)/       # Rutas privadas (mis reservas)
 │   ├── (admin)/         # Panel de administración
 │   └── api/             # API Routes de Next.js
-├── components/          # Componentes de React reutilizables
-├── lib/                 # Configuraciones (Prisma, Better Auth, i18n)
+├── components/          # Componentes de React reutilizables (ui, layout, forms)
+├── docs/                # Documentación técnica (REGLAS.md, API.md)
+├── hooks/               # Custom Hooks de React (use-auth-guard)
+├── lib/                 # Configuraciones (Prisma, Better Auth, i18n, validaciones)
 ├── services/            # Lógica de negocio pura (validaciones de reservas y espacios)
 ├── prisma/              # Esquema de BD, migraciones y seed
 └── types/               # Interfaces y tipos de TypeScript
 ```
+
+---
+
+## URL de la aplicación desplegada
+
+https://cospace-jorgecb.vercel.app

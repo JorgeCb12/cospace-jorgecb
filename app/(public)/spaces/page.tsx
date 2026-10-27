@@ -11,43 +11,46 @@ export default async function CatalogPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto p-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">
-        Catálogo de Espacios
-      </h1>
+    <div className="max-w-7xl mx-auto p-8 py-12">
+      <div className="mb-12">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Catálogo</h1>
+        <p className="text-gray-500 text-lg">
+          Encuentra el lugar perfecto para tu próximo proyecto.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {spaces.map((space) => (
           <div
             key={space.id}
-            className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col"
+            className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
           >
-            <div className="relative h-48 w-full">
+            <div className="relative h-56 w-full overflow-hidden">
               <Image
                 src={space.imageUrl}
                 alt={space.name}
                 fill
-                className="object-cover"
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
               />
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold text-gray-900 shadow-sm">
+                ${Number(space.pricePerHour).toFixed(2)}/hr
+              </div>
             </div>
 
             <div className="p-6 flex flex-col flex-grow">
-              <h2 className="text-xl font-bold text-gray-900">{space.name}</h2>
-              <p className="text-gray-600 mt-2 flex-grow">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {space.name}
+              </h2>
+              <p className="text-gray-500 line-clamp-2 flex-grow">
                 {space.description}
               </p>
 
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-lg font-bold text-blue-600">
-                  ${Number(space.pricePerHour).toFixed(2)} / hora
-                </span>
-                <Link
-                  href={`/spaces/${space.id}`}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Ver Detalle
-                </Link>
-              </div>
+              <Link
+                href={`/spaces/${space.id}`}
+                className="mt-6 block text-center w-full bg-blue-50 text-blue-700 font-bold py-3 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300"
+              >
+                Ver Detalle
+              </Link>
             </div>
           </div>
         ))}
