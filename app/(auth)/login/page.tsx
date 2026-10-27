@@ -22,7 +22,7 @@ export default function LoginPage() {
       password,
       fetchOptions: {
         onSuccess: () => {
-          router.push("/");
+          router.replace("/dashboard");
         },
         onError: (ctx) => {
           setError(ctx.error.message);

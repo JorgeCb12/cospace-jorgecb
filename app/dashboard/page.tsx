@@ -3,10 +3,13 @@
 import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAuthGuard } from "@/lib/use-auth-guard";
 
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+
+  useAuthGuard();
 
   useEffect(() => {
     if (!isPending && !session) {

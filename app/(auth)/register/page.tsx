@@ -24,7 +24,7 @@ export default function RegisterPage() {
       name,
       fetchOptions: {
         onSuccess: () => {
-          router.push("/dashboard"); // Si se registra, lo mandamos directo al dashboard
+          router.replace("/dashboard");
         },
         onError: (ctx) => {
           setError(ctx.error.message);
