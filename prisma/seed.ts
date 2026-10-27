@@ -15,7 +15,13 @@ async function main() {
         name: "Administrador CoSpace",
       },
     });
+    console.log("Admin creado");
   }
+
+  await prisma.user.update({
+    where: { email: adminEmail },
+    data: { role: "ADMIN" },
+  });
 
   const spacesCount = await prisma.space.count();
   if (spacesCount === 0) {

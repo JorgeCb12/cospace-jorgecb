@@ -1,5 +1,5 @@
 {
-  "name": "next-fullstack-boilerplate",
+  "name": "cospace",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -22,15 +22,17 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-hook-form": "^7.91.0",
-    "typescript": "^7.0.2",
     "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "dotenv": "^18.0.9",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
     "postcss": "^8.5.32",
     "prisma": "^7.10.1",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.15"
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.0"
   }
 }

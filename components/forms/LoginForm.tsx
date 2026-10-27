@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginInput } from "@/lib/validations/auth";
 import { Input } from "@/components/ui/Input";
+import { User } from "@/types";
 
 export function LoginForm() {
   const router = useRouter();
@@ -30,7 +31,15 @@ export function LoginForm() {
       email: data.email,
       password: data.password,
       fetchOptions: {
-        onSuccess: () => router.replace("/dashboard"),
+        onSuccess: (ctx) => {
+          const loggedUser = ctx.data?.user as User | undefined;
+
+          if (loggedUser?.role === "ADMIN") {
+            router.replace("/admin/spaces");
+          } else {
+            router.replace("/dashboard");
+          }
+        },
         onError: (ctx) =>
           setGlobalError(ctx.error.message || "Credenciales incorrectas"),
       },
