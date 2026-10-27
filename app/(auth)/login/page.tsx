@@ -4,28 +4,38 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, LoginInput } from "@/lib/validations/auth";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [globalError, setGlobalError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginInput) => {
+    setGlobalError("");
     setLoading(true);
 
     await signIn.email({
-      email,
-      password,
+      email: data.email,
+      password: data.password,
       fetchOptions: {
         onSuccess: () => {
           router.replace("/dashboard");
         },
         onError: (ctx) => {
-          setError(ctx.error.message);
+          setGlobalError(
+            ctx.error.message || "Correo o contraseña incorrectos.",
+          );
         },
       },
     });
@@ -38,10 +48,10 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-md">
         <h2 className="text-center text-2xl font-bold">Iniciar Sesión</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="rounded bg-red-100 p-3 text-sm text-red-700">
-              {error}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {globalError && (
+            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
+              {globalError}
             </div>
           )}
 
@@ -51,11 +61,18 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none"
+              {...register("email")}
+              className={`mt-1 block w-full rounded-md border p-2 shadow-sm focus:outline-none ${
+                errors.email
+                  ? "border-red-500"
+                  : "border-gray-300 focus:border-blue-500"
+              }`}
             />
+            {errors.email && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -64,17 +81,24 @@ export default function LoginPage() {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none"
+              {...register("password")}
+              className={`mt-1 block w-full rounded-md border p-2 shadow-sm focus:outline-none ${
+                errors.password
+                  ? "border-red-500"
+                  : "border-gray-300 focus:border-blue-500"
+              }`}
             />
+            {errors.password && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:opacity-50"
+            className="w-full rounded-md bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
           >
             {loading ? "Cargando..." : "Entrar"}
           </button>
