@@ -42,45 +42,62 @@ export function RegisterForm() {
 
   return (
     <>
-      <h2 className="text-center text-2xl font-bold">Crear Cuenta</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          Crea tu cuenta
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Únete a CoSpace y empieza a reservar hoy mismo.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {globalError && (
-          <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-            {globalError}
+          <div className="rounded-xl bg-red-50 p-4 text-sm font-medium text-red-600 border border-red-100 flex items-center gap-2">
+            <span></span> {globalError}
           </div>
         )}
 
         <Input
-          label="Nombre"
+          label="Nombre completo"
           type="text"
+          placeholder="Ej. Juan Pérez"
           {...register("name")}
           error={errors.name?.message}
+          className="bg-gray-50"
         />
         <Input
-          label="Correo"
+          label="Correo electrónico"
           type="email"
+          placeholder="tu@correo.com"
           {...register("email")}
           error={errors.email?.message}
+          className="bg-gray-50"
         />
         <Input
           label="Contraseña"
           type="password"
+          placeholder="Mín. 8 caracteres, 1 mayúscula, 1 número"
           {...register("password")}
           error={errors.password?.message}
+          className="bg-gray-50"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="w-full rounded-xl bg-blue-600 p-3.5 text-white font-bold text-lg shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 transition-all duration-200 mt-2"
         >
-          {loading ? "Cargando..." : "Registrarse"}
+          {loading ? "Creando cuenta..." : "Registrarse"}
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-gray-600 mt-8">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="text-blue-600 hover:underline">
+        <Link
+          href="/login"
+          className="font-bold text-blue-600 hover:text-blue-800 transition-colors"
+        >
           Inicia sesión aquí
         </Link>
       </p>

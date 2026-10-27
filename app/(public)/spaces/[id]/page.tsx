@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers"; // <-- Importamos headers
 
 export default async function SpaceDetailPage({
   params,
@@ -17,6 +19,11 @@ export default async function SpaceDetailPage({
   if (!space || !space.isActive) {
     notFound();
   }
+
+  // Obtenemos la sesión del usuario en el servidor (SSR)
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <div className="max-w-6xl mx-auto p-6 py-12">
@@ -60,12 +67,22 @@ export default async function SpaceDetailPage({
             </div>
           </div>
 
-          <Link
-            href={`/spaces/${space.id}/book`}
-            className="block text-center w-full bg-blue-600 text-white text-lg font-bold py-4 rounded-xl hover:bg-blue-700 hover:shadow-lg transition-all duration-300"
-          >
-            Reservar Ahora
-          </Link>
+          {/* Lógica condicional del botón */}
+          {session ? (
+            <Link
+              href={`/spaces/${space.id}/book`}
+              className="block text-center w-full bg-blue-600 text-white text-lg font-bold py-4 rounded-xl hover:bg-blue-700 hover:shadow-lg transition-all duration-300"
+            >
+              Reservar Ahora
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="block text-center w-full bg-gray-900 text-white text-lg font-bold py-4 rounded-xl hover:bg-black hover:shadow-lg transition-all duration-300"
+            >
+              Inicia sesión para reservar
+            </Link>
+          )}
         </div>
       </div>
     </div>

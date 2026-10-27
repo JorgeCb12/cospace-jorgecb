@@ -33,7 +33,6 @@ export function LoginForm() {
       fetchOptions: {
         onSuccess: (ctx) => {
           const loggedUser = ctx.data?.user as User | undefined;
-
           if (loggedUser?.role === "ADMIN") {
             router.replace("/admin/spaces");
           } else {
@@ -50,39 +49,55 @@ export function LoginForm() {
 
   return (
     <>
-      <h2 className="text-center text-2xl font-bold">Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          Bienvenido de nuevo
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Ingresa tus credenciales para acceder a CoSpace.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {globalError && (
-          <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-            {globalError}
+          <div className="rounded-xl bg-red-50 p-4 text-sm font-medium text-red-600 border border-red-100 flex items-center gap-2">
+            <span>⚠️</span> {globalError}
           </div>
         )}
 
         <Input
-          label="Correo"
+          label="Correo electrónico"
           type="email"
+          placeholder="tu@correo.com"
           {...register("email")}
           error={errors.email?.message}
+          className="bg-gray-50"
         />
+
         <Input
           label="Contraseña"
           type="password"
+          placeholder="••••••••"
           {...register("password")}
           error={errors.password?.message}
+          className="bg-gray-50"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="w-full rounded-xl bg-blue-600 p-3.5 text-white font-bold text-lg shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 transition-all duration-200 mt-2"
         >
-          {loading ? "Cargando..." : "Entrar"}
+          {loading ? "Verificando..." : "Iniciar Sesión"}
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-gray-600 mt-8">
         ¿No tienes cuenta?{" "}
-        <Link href="/register" className="text-blue-600 hover:underline">
+        <Link
+          href="/register"
+          className="font-bold text-blue-600 hover:text-blue-800 transition-colors"
+        >
           Regístrate aquí
         </Link>
       </p>
