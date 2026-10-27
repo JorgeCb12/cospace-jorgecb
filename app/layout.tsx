@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Fullstack Boilerplate",
+  description: "Base project for fullstack applications",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
