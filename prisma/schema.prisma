@@ -18,6 +18,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  reservations  Reservation[] 
 
   @@unique([email])
   @@map("user")
@@ -69,4 +70,48 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+
+// --- Enums para CoSpace ---
+enum ReservationStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+// --- Modelos de CoSpace ---
+
+model Space {
+  id           String        @id @default(cuid())
+  name         String
+  description  String
+  pricePerHour Decimal       @db.Decimal(10, 2)
+  imageUrl     String
+  isActive     Boolean       @default(true) // Regla 12
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  reservations Reservation[]
+
+  @@index([isActive])
+}
+
+model Reservation {
+  id         String            @id @default(cuid())
+  startTime  DateTime
+  endTime    DateTime
+  totalPrice Decimal           @db.Decimal(10, 2) // Regla 8: Calculado en servidor
+  status     ReservationStatus @default(CONFIRMED)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  userId     String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  spaceId    String
+  space      Space  @relation(fields: [spaceId], references: [id], onDelete: Restrict)
+
+  // Índices para búsquedas rápidas de solapamientos (Reglas 4 y 5)
+  @@index([spaceId, startTime, endTime])
+  @@index([userId, startTime, endTime])
 }
