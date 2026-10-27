@@ -69,18 +69,20 @@ export default function BookSpacePage({
   };
 
   return (
-    <div className="max-w-xl mx-auto p-8 bg-white shadow-md rounded-xl mt-10">
-      <h1 className="text-2xl font-bold mb-6">Reservar Espacio</h1>
+    <div className="max-w-xl mx-auto p-8 bg-white shadow-2xl rounded-3xl mt-12 border border-gray-100">
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+        Confirmar Reserva
+      </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded border border-red-200 text-sm">
+          <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 text-sm font-medium">
             {error}
           </div>
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-bold text-gray-700 mb-2">
             Fecha y Hora de Inicio
           </label>
           <input
@@ -88,12 +90,12 @@ export default function BookSpacePage({
             required
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
-            className="mt-1 block w-full rounded-md border p-2 shadow-sm focus:outline-none focus:border-blue-500"
+            className="block w-full rounded-xl border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-bold text-gray-700 mb-2">
             Fecha y Hora de Fin
           </label>
           <input
@@ -101,23 +103,23 @@ export default function BookSpacePage({
             required
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="mt-1 block w-full rounded-md border p-2 shadow-sm focus:outline-none focus:border-blue-500"
+            className="block w-full rounded-xl border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white font-bold py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-blue-600 text-white text-lg font-bold py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all"
         >
           {loading ? "Procesando..." : "Confirmar Reserva"}
         </button>
       </form>
 
-      <div className="mt-4 text-center">
+      <div className="mt-6 text-center">
         <Link
           href={`/spaces/${id}`}
-          className="text-sm text-gray-500 hover:underline"
+          className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors"
         >
           Cancelar y volver
         </Link>
