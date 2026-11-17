@@ -44,5 +44,5 @@ jobs:
             docker pull ghcr.io/jorgecb12/cospace-jorgecb:latest
             docker stop cospace-app || true
             docker rm cospace-app || true
-            docker run -d --name cospace-app --restart always -p 3000:3000 --env-file /home/ubuntu/cospace-jorgecb/.env ghcr.io/jorgecb12/cospace-jorgecb:latest
+            docker run -d --name cospace-app --restart always --network host --env-file /home/ubuntu/cospace-jorgecb/.env ghcr.io/jorgecb12/cospace-jorgecb:latest
             docker image prune -f
