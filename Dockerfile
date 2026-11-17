@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 # Añadimos una DATABASE_URL ficticia solo para que Prisma pueda generar el cliente
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 
-RUN npm ci
+RUN npm install
 
 # Etapa 2: Compilar la aplicación
 FROM node:22-alpine AS builder
