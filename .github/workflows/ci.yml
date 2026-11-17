@@ -41,10 +41,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            # TAMBIÉN CAMBIAMOS EL PULL A MINÚSCULAS
             docker pull ghcr.io/jorgecb12/cospace-jorgecb:latest
             docker stop cospace-app || true
             docker rm cospace-app || true
-            # Y EL RUN A MINÚSCULAS
             docker run -d --name cospace-app --restart always -p 3000:3000 --env-file /home/ubuntu/cospace-jorgecb/.env ghcr.io/jorgecb12/cospace-jorgecb:latest
             docker image prune -f
