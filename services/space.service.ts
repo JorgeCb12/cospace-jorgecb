@@ -5,7 +5,7 @@ export const spaceSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
   description: z.string().min(1, "La descripción es obligatoria"),
   pricePerHour: z.number().positive("El precio debe ser mayor a 0"),
-  imageUrl: z.string().url("Debe ser una URL válida"),
+  imageUrl: z.string().min(1, "La imagen es obligatoria"),
 });
 
 export type SpaceInput = z.infer<typeof spaceSchema>;

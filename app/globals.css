@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Geist", "Aptos", "Helvetica Neue", sans-serif;
+  --font-sans: "Inter", "Aptos", "Helvetica Neue", sans-serif;
+
+  --color-canvas: #f8f9fa;
+  --color-ink: #18181b;
+  --color-olive-50: #f4f5ee;
+  --color-olive-100: #e8eadf;
+  --color-olive-500: #697153;
+  --color-olive-600: #555d42;
+  --color-olive-700: #454b35;
+  --color-terracotta-50: #fbf4f0;
+  --color-terracotta-500: #a56a56;
+  --color-terracotta-600: #8f5948;
+}
+
+:root {
+  --font-display: "Geist", "Aptos", "Helvetica Neue", sans-serif;
+  --font-sans: "Inter", "Aptos", "Helvetica Neue", sans-serif;
+}
+
+html {
+  background: #f8f9fa;
+}
+
+body {
+  margin: 0;
+  background: #f8f9fa;
+  color: #18181b;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+}
